@@ -29,6 +29,17 @@ public abstract class GameLevelDefaultImpl extends Thread implements GameLevel {
 		this.minimumDelayBetweenCycles = minimumDelayBetweenCycles;
 	}
 
+	/**
+	 * Returns the position of a cell by it's index.
+	 * This is very useful for a game that relies on cells, the size of those cells are determined by the size of the
+	 * sprites (which is defined by the game configuration your game is using).
+	 * @param i The index of the cell you wish to retrieve it's position.
+	 * @return The position of the cell.
+	 */
+	public int getCellPositionByIndex(int i) {
+		return i * this.spriteSize;
+	}
+
 	@Override
 	public void start() {
 		init();
