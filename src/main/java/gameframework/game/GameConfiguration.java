@@ -54,52 +54,90 @@ public class GameConfiguration {
 					 : nbLives;
 	}
 
+	/**
+	 * Default constructor which construct a game configruation from default parameters
+	 */
 	public GameConfiguration() {
 		this(DEFAULT_NBROWS, DEFAULT_NBCOL, DEFAULT_SPRITESIZE, DEFAULT_NBLIVES);
 	}
 
 	// METHODS
-	
+
+	/**
+	 * @return the number of row from the game configuration
+	 */
 	public int getNbRows() {
 		return nbRows;
 	}
 
+	/**
+	 * @return the number of column from the game configuration
+	 */
 	public int getNbColumns() {
 		return nbColumns;
 	}
 
+	/**
+	 * @return the general size of sprite from the game configuration
+	 */
 	public int getSpriteSize() {
 		return spriteSize;
 	}
 
+	/**
+	 * @return the default number of lives feom the game configuration
+	 */
 	public int getDefaultNbLives() {
 		return nbLives;
 	}
 
+	/**
+	 * @return a new game canvas
+	 */
 	public GameCanvas createCanvas() {
 		return new GameCanvasDefaultImpl();
 	}
 
+	/**
+	 * @return a new move blocker rules applier
+	 */
 	public MoveBlockerRulesApplier createMoveBlockerRulesApplier() {
 		return new MoveBlockerRulesApplierDefaultImpl();
 	}
 
+	/**
+	 * @return a new move blocker checker
+	 */
 	public MoveBlockerChecker createMoveBlockerChecker() {
 		return new MoveBlockerCheckerDefaultImpl();
 	}
 
+	/**
+	 * @return a new overlap rules applier
+	 */
 	public OverlapRulesApplier createOverlapRulesApplier() {
 		return new OverlapRulesApplierDefaultImpl();
 	}
 
+	/**
+	 * @return a new overlap processor
+	 */
 	public OverlapProcessor createOverlapProcessor() {
 		return new OverlapProcessorDefaultImpl();
 	}
 
+	/**
+	 * @return a new universe from the game configuration
+	 */
 	public GameUniverse createUniverse() {
 		return createUniverse(new GameData(this));
 	}
 
+	/**
+	 * Create a game universe from a specific game data
+	 * @param gameData the specified game data
+	 * @return a new game universe
+	 */
 	public GameUniverse createUniverse(GameData gameData) {
 		return new GameUniverseDefaultImpl(gameData);
 	}
