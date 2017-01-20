@@ -25,7 +25,8 @@ public class GameMovableTest {
 			}
 
 			@Override
-			public void oneStepMoveAddedBehavior() {
+			public void oneStepMove() {
+				super.oneStepMove();
 				oneStepMoveAddedBehavior++;
 			}
 		};
