@@ -11,12 +11,18 @@ import java.awt.event.WindowEvent;
 
 import java.awt.Component;
 
+/**
+ * This class represents a single window of the game : the visible part for the player
+ * It makes a frame appear onto the screen 
+ */
 public class GameWindow {
 
+	//FIELDS
 	protected final Frame frame;
 	protected GameCanvas gameCanvas;
 	protected final GameStatusBar statusBar = new GameStatusBar();
 	
+	// CONSTRUCTORS
 	public GameWindow(String gameName, GameCanvas gameCanvas, GameData data) {
 		this(gameName, gameCanvas, data.getConfiguration(),
 				new GameStatusBarElement<>("Score:", data.getScore()),
@@ -37,6 +43,9 @@ public class GameWindow {
 				configuration.getSpriteSize() * configuration.getNbRows());
 	}
 
+	/**
+	 * This method creates a game user interface
+	 */
 	public void createGUI() {
 		frame.dispose();
 		frame.setMenuBar(new GameMenuBar().getComponent());
@@ -54,6 +63,11 @@ public class GameWindow {
 		});
 	}
 
+	/**
+	 * This method add a component to the frame 
+	 * @param comp the component to add to the frame
+	 * @param layout the layout to use for the new component
+	 */
 	public void add(Component comp, String layout) {
 		this.frame.add(comp, layout);
 		this.frame.pack();
