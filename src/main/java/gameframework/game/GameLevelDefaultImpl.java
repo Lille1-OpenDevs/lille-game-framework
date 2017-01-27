@@ -4,8 +4,7 @@ import gameframework.drawing.GameUniverseViewPort;
 
 /**
  * Default implementation of a game level.
- *
- * Technically speaking, a level is nothing more than a thread that implements a method specific to levels.
+ * When creating the level for your game, you should extend this class rather than implementing the interface itself.
  */
 public abstract class GameLevelDefaultImpl extends Thread implements GameLevel {
 	/** The default "tick rate" used for game simulation. */
