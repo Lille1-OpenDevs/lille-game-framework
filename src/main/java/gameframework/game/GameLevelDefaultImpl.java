@@ -3,25 +3,51 @@ package gameframework.game;
 import gameframework.drawing.GameUniverseViewPort;
 
 /**
- * To be implemented with respect to a specific game. Expected to initialize the
- * universe and the gameBoard
+ * Default implementation of a game level.
+ * When creating the level for your game, you should extend this class rather than implementing the interface itself.
  */
 public abstract class GameLevelDefaultImpl extends Thread implements GameLevel {
+	/** The default "tick rate" used for game simulation. */
 	private static final int DEFAULT_MINIMUM_DELAY_BETWEEN_GAME_CYCLES = 100;
+
+	/** The "tick rate" used for game simulation. */
 	protected final int minimumDelayBetweenCycles;
+
+	/** The universe used within this level. */
 	protected GameUniverse universe;
+
+	/** The board used within this level. */
 	protected GameUniverseViewPort gameBoard;
+
+	/** The game data used within this level. */
 	protected final GameData data;
+
+	/** The size of the sprites. */
 	protected final int spriteSize;
 
+	/** Main game loop (false means we're finished). */
 	protected boolean stopGameLoop;
 
+	/**
+	 * Initialize the level.
+	 *
+	 * This is where you should change the game's board background, spawn your entities and such.
+	 */
 	protected abstract void init();
 
+	/**
+	 * Create a level with a specific game data to use.
+	 * @param data The game data to use.
+	 */
 	public GameLevelDefaultImpl(GameData data) {
 		this(data, DEFAULT_MINIMUM_DELAY_BETWEEN_GAME_CYCLES);
 	}
 
+	/**
+	 * Create a level with a specific game data and "tick rate" to use.
+	 * @param data The game data to use.
+	 * @param minimumDelayBetweenCycles The "tick rate" to use.
+	 */
 	public GameLevelDefaultImpl(GameData data, int minimumDelayBetweenCycles) {
 		this.data = data;
 		this.spriteSize = data.getConfiguration().getSpriteSize();
@@ -30,8 +56,14 @@ public abstract class GameLevelDefaultImpl extends Thread implements GameLevel {
 	}
 
 	@Override
+	/**
+	 * Start the level (thread).
+	 *
+	 * This is probably not the best place to initialize the level (change the game's board background, add entities
+	 * and such), consider doing that in the "init" method instead.
+	 */
 	public void start() {
-		init();
+		this.init();
 		super.start();
 		try {
 			super.join();
@@ -41,30 +73,41 @@ public abstract class GameLevelDefaultImpl extends Thread implements GameLevel {
 	}
 
 	@Override
+	/**
+	 * Run the level
+	 *
+	 * The thread performs it's job unless the level is ordered to be stopped (or the thread is interrupted).
+	 */
 	public void run() {
-		stopGameLoop = false;
-		// main game loop :
+		this.stopGameLoop = false;
+
+		// Main game loop
 		long start;
 		while (!stopGameLoop && !this.isInterrupted()) {
 			start = System.currentTimeMillis();
-			gameBoard.paint();
-			universe.allOneStepMoves();
-			universe.processAllOverlaps();
-			long sleepTime = minimumDelayBetweenCycles
-					- (System.currentTimeMillis() - start);
+			this.gameBoard.paint();
+			this.universe.allOneStepMoves();
+			this.universe.processAllOverlaps();
+
+			long sleepTime = this.minimumDelayBetweenCycles  - (System.currentTimeMillis() - start);
 			if (sleepTime > 0) {
 				try {
 					Thread.sleep(sleepTime);
 				} catch (InterruptedException e) {
-					// that's ok, we just didn't managed to finish sleeping
+					// That's ok, we just didn't managed to finish sleeping
 				}
 			}
 		}
 	}
 
 	@Override
+	/**
+	 * Ends the level.
+	 *
+	 * This is the ideal place to free the universe of entities, switch to another level... Basically anything "end of
+	 * level" related.
+	 */
 	public void end() {
-		stopGameLoop = true;
+		this.stopGameLoop = true;
 	}
-
 }
