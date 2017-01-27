@@ -10,6 +10,10 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
+/**
+ * Default Implementation of GameUniverse
+ *
+ */
 public class GameUniverseDefaultImpl implements GameUniverse {
 	protected ConcurrentLinkedQueue<GameEntity> gameEntities = new ConcurrentLinkedQueue<>();
 	protected final GameData data;
