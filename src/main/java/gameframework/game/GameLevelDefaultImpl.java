@@ -4,7 +4,9 @@ import gameframework.drawing.GameUniverseViewPort;
 
 /**
  * Default implementation of a game level.
- * When creating the level for your game, you should extend this class rather than implementing the interface itself.
+ *
+ * When creating the level for your game, you should extend this class rather
+ * than implementing the interface itself.
  */
 public abstract class GameLevelDefaultImpl extends Thread implements GameLevel {
 	/** The default "tick rate" used for game simulation. */
@@ -25,19 +27,22 @@ public abstract class GameLevelDefaultImpl extends Thread implements GameLevel {
 	/** The size of the sprites. */
 	protected final int spriteSize;
 
-	/** Main game loop (false means we're finished). */
+	/** Flag to trigger the game loop (false means continue playing). */
 	protected boolean stopGameLoop;
 
 	/**
 	 * Initialize the level.
 	 *
-	 * This is where you should change the game's board background, spawn your entities and such.
+	 * This is where you should change the game's board background, spawn your
+	 * entities and so on.
 	 */
 	protected abstract void init();
 
 	/**
 	 * Create a level with a specific game data to use.
-	 * @param data The game data to use.
+	 *
+	 * @param data
+	 *            The game data to use.
 	 */
 	public GameLevelDefaultImpl(GameData data) {
 		this(data, DEFAULT_MINIMUM_DELAY_BETWEEN_GAME_CYCLES);
@@ -45,8 +50,11 @@ public abstract class GameLevelDefaultImpl extends Thread implements GameLevel {
 
 	/**
 	 * Create a level with a specific game data and "tick rate" to use.
-	 * @param data The game data to use.
-	 * @param minimumDelayBetweenCycles The "tick rate" to use.
+	 * 
+	 * @param data
+	 *            The game data to use.
+	 * @param minimumDelayBetweenCycles
+	 *            The "tick rate" to use.
 	 */
 	public GameLevelDefaultImpl(GameData data, int minimumDelayBetweenCycles) {
 		this.data = data;
@@ -59,8 +67,9 @@ public abstract class GameLevelDefaultImpl extends Thread implements GameLevel {
 	/**
 	 * Start the level (thread).
 	 *
-	 * This is probably not the best place to initialize the level (change the game's board background, add entities
-	 * and such), consider doing that in the "init" method instead.
+	 * This is probably not the best place to initialize the level (change the
+	 * game's board background, add entities and such), consider doing that in
+	 * the "init" method instead.
 	 */
 	public void start() {
 		this.init();
@@ -76,25 +85,25 @@ public abstract class GameLevelDefaultImpl extends Thread implements GameLevel {
 	/**
 	 * Run the level
 	 *
-	 * The thread performs it's job unless the level is ordered to be stopped (or the thread is interrupted).
+	 * The thread performs it's job unless the level is ordered to be stopped
+	 * (or the thread is interrupted).
 	 */
 	public void run() {
-		this.stopGameLoop = false;
+		stopGameLoop = false;
 
 		// Main game loop
-		long start;
 		while (!stopGameLoop && !this.isInterrupted()) {
-			start = System.currentTimeMillis();
-			this.gameBoard.paint();
-			this.universe.allOneStepMoves();
-			this.universe.processAllOverlaps();
+			long start = System.currentTimeMillis();
+			gameBoard.paint();
+			universe.allOneStepMoves();
+			universe.processAllOverlaps();
 
-			long sleepTime = this.minimumDelayBetweenCycles  - (System.currentTimeMillis() - start);
+			long sleepTime = this.minimumDelayBetweenCycles - (System.currentTimeMillis() - start);
 			if (sleepTime > 0) {
 				try {
 					Thread.sleep(sleepTime);
 				} catch (InterruptedException e) {
-					// That's ok, we just didn't managed to finish sleeping
+					// That's ok, we just didn't manage to finish sleeping
 				}
 			}
 		}
@@ -104,10 +113,10 @@ public abstract class GameLevelDefaultImpl extends Thread implements GameLevel {
 	/**
 	 * Ends the level.
 	 *
-	 * This is the ideal place to free the universe of entities, switch to another level... Basically anything "end of
-	 * level" related.
+	 * This is the ideal place to free the universe of entities, switch to
+	 * another level... Basically anything "end of level" related.
 	 */
 	public void end() {
-		this.stopGameLoop = true;
+		stopGameLoop = true;
 	}
 }
