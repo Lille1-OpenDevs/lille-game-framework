@@ -112,7 +112,7 @@ public class Sound {
 		for (;counter < nbloop; counter++){
 			volume.setValue(volume.getValue()-level);
 			try {
-				wait(interval);
+				Thread.sleep(interval);
 			} catch (InterruptedException e) {
 				clip.close();
 				
