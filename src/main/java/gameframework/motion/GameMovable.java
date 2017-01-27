@@ -41,6 +41,8 @@ public abstract class GameMovable implements ObjectWithBoundedBox {
 		return moveDriver;
 	}
 
+	/** Actual and standard move of a movable 
+	 */
 	public void oneStepMove() {
 		SpeedVector m = moveDriver.getSpeedVector(this);
 		speedVector.setDirection(m.getDirection());
@@ -50,8 +52,8 @@ public abstract class GameMovable implements ObjectWithBoundedBox {
 				.getY() * speedVector.getSpeed());
 		oneStepMoveAddedBehavior();
 	}
-
-	public abstract void oneStepMoveAddedBehavior();
+	
+	public void oneStepMoveAddedBehavior(){};
 	
 	@Override
 	public boolean isMovable(){

@@ -140,10 +140,9 @@ public class MoveBlockerCheckerDefaultImplTest {
 		public Rectangle getBoundingBox() {
 			return new Rectangle(0, 0, 10, 10);
 		}
-	
+
 		@Override
 		public void oneStepMoveAddedBehavior() {
-			//Nothing 
 		}
 		
 	}

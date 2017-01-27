@@ -62,8 +62,7 @@ class MyMovable extends GameMovable {
 	}
 
 	@Override
-	public void oneStepMoveAddedBehavior() {
-
+	public void oneStepMoveAddedBehavior() {		
 	}
 }
 
