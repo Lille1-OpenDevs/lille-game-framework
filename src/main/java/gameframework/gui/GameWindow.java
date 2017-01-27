@@ -15,19 +15,28 @@ public class GameWindow {
 
 	protected final Frame frame;
 	protected GameCanvas gameCanvas;
-	protected final GameStatusBar statusBar = new GameStatusBar();
+	protected GameStatusBar statusBar = new GameStatusBar();
 	
 	public GameWindow(String gameName, GameCanvas gameCanvas, GameData data) {
-		this(gameName, gameCanvas, data.getConfiguration(),
+		this(gameName, gameCanvas, data.getConfiguration(), new GameStatusBar(),
+				new GameStatusBarElement<>("Score:", data.getScore()),
+				new GameStatusBarElement<>("Life:", data.getLife()));
+	}
+
+	public GameWindow(String gameName, GameCanvas gameCanvas, GameData data, GameStatusBar statusBar) {
+		this(gameName, gameCanvas, data.getConfiguration(), statusBar,
 				new GameStatusBarElement<>("Score:", data.getScore()),
 				new GameStatusBarElement<>("Life:", data.getLife()));
 	}
 
 	public GameWindow(String gameName, GameCanvas gameCanvas,
-			GameConfiguration configuration,
+			GameConfiguration configuration, GameStatusBar statusBar,
 			GameStatusBarElement<?>... elementsStatusBar) {
 		if (gameCanvas == null) {
 			throw new IllegalArgumentException("gameCanvas is null");
+		}
+		if (statusBar == null) {
+			this.statusBar = new GameStatusBar();
 		}
 		this.statusBar.addAll(elementsStatusBar);
 		this.frame = new Frame(gameName);
