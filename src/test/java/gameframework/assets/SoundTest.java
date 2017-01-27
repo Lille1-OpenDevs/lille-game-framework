@@ -14,6 +14,7 @@ public class SoundTest {
 	@Test
 	public void testcrossFading() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
 		Sound soundTest = new Sound("/welcome.wav");
+		soundTest.play();
 		soundTest.crossFading(3000, 100);
 		assertFalse(soundTest.isPlaying());
 	}

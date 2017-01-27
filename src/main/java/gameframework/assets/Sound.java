@@ -120,4 +120,6 @@ public class Sound {
 		if (counter == nbloop)
 			clip.close();
 	}
+	
+	
 }
