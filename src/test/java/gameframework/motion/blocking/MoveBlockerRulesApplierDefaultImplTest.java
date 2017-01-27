@@ -60,6 +60,10 @@ class MyMovable extends GameMovable {
 	public Rectangle getBoundingBox() {
 		return null;
 	}
+
+	@Override
+	public void oneStepMoveAddedBehavior() {		
+	}
 }
 
 class MyMoveBlocker implements MoveBlocker {

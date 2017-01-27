@@ -242,6 +242,10 @@ public class OverlapProcessorDefaultImplTest {
 				return new Point(x, y);
 			}
 
+			@Override
+			public void oneStepMoveAddedBehavior() {
+			}
+
 		};
 	}
 

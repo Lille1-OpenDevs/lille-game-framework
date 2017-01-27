@@ -80,6 +80,10 @@ public class GameMovableDriverDefaultImplTest {
 			public Rectangle getBoundingBox() {
 				return null;
 			}
+
+			@Override
+			public void oneStepMoveAddedBehavior() {
+			}
 		};
 	}
 

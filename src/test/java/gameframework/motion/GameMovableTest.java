@@ -29,6 +29,10 @@ public class GameMovableTest {
 				super.oneStepMove();
 				oneStepMoveAddedBehavior++;
 			}
+
+			@Override
+			public void oneStepMoveAddedBehavior() {
+			}
 		};
 	}
 

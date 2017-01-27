@@ -50,7 +50,10 @@ public abstract class GameMovable implements ObjectWithBoundedBox {
 		position.translate((int) speedVector.getDirection().getX()
 				* speedVector.getSpeed(), (int) speedVector.getDirection()
 				.getY() * speedVector.getSpeed());
+		oneStepMoveAddedBehavior();
 	}
+	
+	public abstract void oneStepMoveAddedBehavior();
 	
 	@Override
 	public boolean isMovable(){

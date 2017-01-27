@@ -160,4 +160,9 @@ public class IntersectToolsTest extends GameMovable {
 	public void setSpeedVector(SpeedVector m) {
 		fail("No need to set the speed vector");
 	}
+
+	@Override
+	public void oneStepMoveAddedBehavior() {
+		
+	}
 }
