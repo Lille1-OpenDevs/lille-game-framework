@@ -163,6 +163,6 @@ public class IntersectToolsTest extends GameMovable {
 
 	@Override
 	public void oneStepMoveAddedBehavior() {
-		
+		fail("No need to add a behavior");
 	}
 }

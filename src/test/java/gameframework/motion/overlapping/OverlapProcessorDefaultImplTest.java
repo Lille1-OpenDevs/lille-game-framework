@@ -273,4 +273,8 @@ public class OverlapProcessorDefaultImplTest {
 
 }
 
-abstract class MovableOverlappable extends GameMovable implements Overlappable {}
+abstract class MovableOverlappable extends GameMovable implements Overlappable {
+	@Override
+	public void oneStepMoveAddedBehavior() {
+	}
+}
