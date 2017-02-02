@@ -10,7 +10,7 @@ package gameframework.game;
 public interface GameLevel extends Runnable {
 
 	/**
-	 * Start the level (aka thread).
+	 * Start the level (aka thread for the default implementation).
 	 *
 	 * This is where you should instantiate all the entities used within your
 	 * level through GameUniverse and perform other "start of game/level"
@@ -19,7 +19,7 @@ public interface GameLevel extends Runnable {
 	public void start();
 
 	/**
-	 * Stop the level (aka thread).
+	 * Stop the level (aka thread for the default implementation).
 	 *
 	 * This is where you should free all the entities used within your level
 	 * through GameUniverse and perform other "end of game/level" operations.
