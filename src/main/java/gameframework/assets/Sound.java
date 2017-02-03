@@ -39,30 +39,7 @@ public class Sound {
 	 * @throws LineUnavailableException
 	 */
 	public Sound(final String path) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
-		InputStream resource = getClass().getResourceAsStream(path);
-		if (resource == null) {
-			throw new IllegalArgumentException("Can't open resource \"" + path + "\"");
-		}
-
-		final BufferedInputStream buffInputStream = new BufferedInputStream(resource);
-		AudioInputStream audioInputStream= null;
-
-		try {
-			audioInputStream = AudioSystem.getAudioInputStream
-					(buffInputStream);
-		} catch (UnsupportedAudioFileException exception) {
-			throw new UnsupportedAudioFileException("The file is not in a valid sound format.");
-		} catch (IOException exception) {
-			throw exception;
-		}
-
-		final AudioFormat format = audioInputStream.getFormat();
-		final DataLine.Info info = new DataLine.Info(Clip.class, format);
-
-		clip = (Clip) AudioSystem.getLine(info);
-		clip.open(audioInputStream);
-
-		isLooping = false;
+		this(path,1.0);
 	}
 
 	/**
