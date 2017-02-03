@@ -64,6 +64,72 @@ public class Sound {
 	}
 
 	/**
+	 * Creates and loads the sound with a different speed
+	 * @param path the path to the sound asset
+	 * @param playSpeed a speed multiplier (1.5 for 150% faster)
+	 * @throws IOException
+	 * @throws UnsupportedAudioFileException
+	 * @throws LineUnavailableException
+	 */
+	public Sound(final String path, double playSpeed) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
+		InputStream resource = getClass().getResourceAsStream(path);
+		if (resource == null) {
+			throw new IllegalArgumentException("Can't open resource \"" + path + "\"");
+		}
+
+		final BufferedInputStream buffInputStream = new BufferedInputStream(resource);
+		AudioInputStream audioInputStream= null;
+
+		try {
+			audioInputStream = AudioSystem.getAudioInputStream
+					(buffInputStream);
+		} catch (UnsupportedAudioFileException exception) {
+			throw new UnsupportedAudioFileException("The file is not in a valid sound format.");
+		} catch (IOException exception) {
+			throw exception;
+		}
+		audioInputStream = changeSpeed(audioInputStream, playSpeed) ;
+		final AudioFormat format = audioInputStream.getFormat();
+	    
+		final DataLine.Info info = new DataLine.Info(Clip.class, format);
+
+		clip = (Clip) AudioSystem.getLine(info);
+		clip.open(audioInputStream);
+
+		isLooping = false;
+	}
+	
+	/**
+	 * Changes the length of an AudioInputStream using a speed multiplier on the length of the audio converted into bytes
+	 * @param path the path to the sound asset
+	 * @param playSpeed a speed multiplier (1.5 for 150% faster)
+	 * @throws IOException
+	 */
+	private AudioInputStream changeSpeed(AudioInputStream ais, Double playSpeed) throws IOException{
+		AudioFormat format = ais.getFormat();
+	    int frameSize = format.getFrameSize();
+	    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+	    
+	    byte[] b = new byte[2^16];
+	    int numberOfReadBytes = 1;
+	    while( numberOfReadBytes > -1 ) {
+	    	numberOfReadBytes = ais.read(b);
+	        if ( numberOfReadBytes > 0 )
+	            baos.write(b, 0, numberOfReadBytes); }	    
+	    byte[] originalLength = baos.toByteArray();
+	    
+	    byte[] newLength = new byte[(int)(originalLength.length/playSpeed)];
+	    for (int i=0 ; i < (newLength.length/frameSize) ; i++) {
+	        int index = (int) (i * frameSize * playSpeed);
+	        if((index % 2)==1) index ++;
+	        
+	        for (int j=0 ; j < frameSize ; j++)
+	        	newLength[(i*frameSize)+j] = originalLength[index+j];
+	    }
+	    ByteArrayInputStream bais = new ByteArrayInputStream(newLength);
+	    return new AudioInputStream(bais, format, newLength.length/frameSize);
+	}
+	/**
 	 * Determines if the sound is currently playing.
 	 * @return true if the sound is playing, false otherwise
 	 */
