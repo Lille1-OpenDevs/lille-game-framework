@@ -10,6 +10,11 @@ import gameframework.motion.overlapping.OverlapRulesApplier;
 import java.util.ArrayList;
 import java.util.List;
 
+/** GameData class
+ * to which should be added game levels,
+ * necessary to create Game implementations,
+ * handles configuration elements : observable values such as life, obstacles in the game a.k.a move blockers and the overlap tools.
+ */
 public class GameData {
 
 	protected final GameCanvas canvas;
@@ -24,6 +29,10 @@ public class GameData {
 	protected final OverlapProcessor overlapProcessor;
 	protected final GameUniverse universe;
 
+	/** GameData's constructor, takes a GameConfiguration, 
+	 * should be called in the game's main class in order to initialize a Game implementation
+	 * @param configuration
+	 */
 	public GameData(GameConfiguration configuration) {
 		this.configuration = configuration;
 
@@ -56,6 +65,9 @@ public class GameData {
 		return score;
 	}
 
+	/**Return the game's canvas which will be needed to add custom images (to entities for example) 
+	 * @return GameCanvas
+	 */
 	public GameCanvas getCanvas() {
 		return canvas;
 	}
